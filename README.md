@@ -12,6 +12,8 @@ He wanted to create a tool that would simplify and streamline the process of man
 
 Basic commands used in Ansible are . :
 
+* ansible all -i inventory.yml -m ping --> This command will ping all the hosts defined in the inventory to check their connectivity .
+
 * ansible all -m ping --> This command uses the ping module to check the connectivity to all hosts defined in the inventory .
 
 * ansible-playbook filename.yml --> This command runs the playbook filename.yml .
