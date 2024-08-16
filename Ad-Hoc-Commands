@@ -62,6 +62,3 @@ Ad-Hoc Commands :
 * ansible webservers -m command -a "systemctl poweroff" --> To poweroff webservers or specific group of systems/servers .
 
 * ansible -i inventory all -b -a "/sbin/poweroff" --> To poweroff all the systems/servers only if the file exists . 
-
-
-
