@@ -1,0 +1,27 @@
+# This is a basic Ansible inventory file with IP addresses
+
+all:
+  hosts:
+    localhost:
+      ansible_connection: local
+
+  children:
+    webservers:
+      hosts:
+        192.168.1.10:
+        192.168.1.11:
+    
+    databases:
+      hosts:
+        192.168.1.20:
+        192.168.1.21:
+
+
+
+
+            # Groups: Groups allow you to organize your hosts into categories, which can be useful for applying specific configurations or tasks to subsets of your infrastructure.
+        
+            # Variables: You can define variables at the group level or host level, allowing you to customize the configuration for different parts of your infrastructure.
+  
+            # Children: In YAML format, groups can contain other groups, allowing for hierarchical organization.
+

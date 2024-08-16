@@ -1,0 +1,9 @@
+---
+
+- name: Poweroff Of All
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Poweroff Of All
+      command: poweroff

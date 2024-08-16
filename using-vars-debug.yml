@@ -1,0 +1,19 @@
+---
+
+- name: Var
+  hosts: all
+  vars:                                                                  # The vars keyword is used to define variables directly within a playbook, task, or role.
+                                                                         # These variables can be used throughout the playbook or specific to the scope they are defined in.
+    name: anyname
+    age: age
+    mail: yourmail@gmail.com
+    place: city
+  tasks:
+    - debug:                                                                    # The debug module is used to print messages or variable values to help with troubleshooting and debugging
+      msg: "My name is {{name}}"                                                # It allows you to output information during the execution of a playbook to understand what is happening at various stages
+    - debug:
+      var: age
+    - debug:
+      msg: "My email address is {{mail}}"
+    - debug:
+      msg: "I am from {{place}}"

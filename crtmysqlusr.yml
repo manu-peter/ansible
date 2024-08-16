@@ -1,0 +1,25 @@
+---
+
+- name: Create user in Mariadb/MySQL
+  hosts: databases
+  become: yes
+  tasks:
+
+    - name: Install pip
+      command: yum install pip
+    - name: Install PyMySQL
+      pip:
+        name: PyMySQL
+        executbale: pip3
+    - name: Start the MySQL service
+      service:
+        name: mysqld
+        state: started
+        enabled: yes
+    - name: Creating user
+      mysql_user:
+        name: username
+        password: 'password'
+        priv: '*.*:ALL'             # Privilage = all
+        state: present
+        login_unix_socket: /var/lib/mysql/mysql.sock

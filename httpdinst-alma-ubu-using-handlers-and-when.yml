@@ -1,0 +1,56 @@
+---
+                                                                          # Playbook to install httpd service on AlmaLinux and apache2 service on Ubuntu using Handlers and When conditions.
+
+- name: Setting up httpd/apache2 on AlmaLinux and Ubuntu
+  hosts: webservers
+  become: yes
+  tasks:
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: present
+      when: ansible_facts['distribution'] == 'AlmaLinux'                  # This task installs the httpd package on AlmaLinux systems otherwise it skips.
+
+    - name: Enabling httpd
+      service:
+        name: httpd
+        enabled: yes
+      when: ansible_facts['distribution'] == 'AlmaLinux'                 # This task ensures that the httpd service is enabled to start on boot on AlmaLinux systems otherwise it skips.
+
+    - name: Install apache2
+      apt:
+        name: apache2
+        state: present
+      when: ansible_facts['distribution'] == 'Ubuntu'                    # This task installs the apache2 package on Ubuntu systems otherwise it skips.
+
+    - name: Enabling apache2
+      service:
+        name: apache2
+        enabled: yes
+      when: ansible_facts['distribution'] == 'Ubuntu'                    # This task ensures that the apache2 service is enabled to start on boot on Ubuntu systems otherwise it skips.
+
+    - name: Copy index.html for httpd
+      file:
+        path: /var/www/html/index.html (file-name)
+        state: touch
+      notify: Restart httpd                                              # This task ensures that the index.html file exists on AlmaLinux systems and notifies the handler to restart httpd if changes are made.
+      when: ansible_facts['distribution'] == 'AlmaLinux'                
+
+    - name: Copy index.html for apache2
+      file:
+        path: /var/www/html/index.html (file-name)
+        state: touch
+      notify: Restart apache2                                            # This task ensures that the index.html file exists on Ubuntu systems and notifies the handler to restart httpd if changes are made.
+      when: ansible_facts['distribution'] == 'Ubuntu'                 
+
+  handlers:
+    - name: Restart httpd
+      service:
+        name: httpd
+        state: restarted                                                 # This handler restarts the httpd service.
+
+    - name: Restart apache2
+      service:
+        name: apache2
+        state: restarted                                                 # This handler restarts the apache2 service.
+

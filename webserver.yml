@@ -1,0 +1,39 @@
+---
+
+- name: Webserver setup
+  hosts: IP / webserver-name
+  become : yes
+
+  tasks:
+
+    - name: Installing httpd
+      anasible.builtin.yum:
+        name: httpd
+        state: present
+
+    - name: Start service
+      ansible.builtin.services:
+        name: httpd
+        state: started
+        enabled: yes
+
+    - name: Downloading template 
+      ansible.builtin.command: wget #link addresss of the template
+
+    - name: Unzip template
+      ansible.builtin.command: unzip #template name that we downloaded
+
+    - name: Copy
+      ansible.builtin.copy:
+        src: template name/         #Source Path
+        dest: /var/www/html         #Destination Path
+        remote_src: yes             #When you want to copy files from one location to another on the remote host, rather than copying files from your local machine to the remote host, you use remote_src.
+
+    - name: Restart
+      ansible.builtin.command: systemctl restart httpd
+
+ 
+
+
+
+

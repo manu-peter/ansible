@@ -1,0 +1,26 @@
+---
+                                                             # To allow services such as ssh , httpd , ftp 
+- name: Allowing services through Firewall-D
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Allow permit for https service
+      firewalld:
+        service: https
+        statse: enabled
+        immediate: yes
+    - name: Allow permit for ssh service
+      firewalld:
+        service: ssh
+        state: enabled
+        immediate: yes
+    - name: Allow permit for ftp service
+      firewalld:
+        service: ftp
+        state: enabled
+        immediate: yes
+
+
+
+          # To remove all access just remove the state from state:enabled to state:disabled

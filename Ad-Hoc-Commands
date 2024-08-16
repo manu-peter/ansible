@@ -1,0 +1,67 @@
+Ad-Hoc Description :
+
+* Ad hoc commands in Ansible are used for performing quick, one-time tasks directly from the command line without the need to create a full playbook . 
+
+* They are useful for tasks like managing packages, starting or stopping services, and gathering system information . 
+
+* These commands provide a convenient way to execute tasks across multiple hosts defined in your inventory .
+
+Ad-Hoc Syntax:
+
+* ansible <host-pattern> -m <module> -a "<module-arguments>" -i inventory
+         
+    host-pattern --> Target host such as --> all , webserver , databases etc...
+   
+    module --> Modules such as --> copy , yum , file , user etc...
+
+    module-arguments --> Module-Arguments such as --> src= , dest= , name= , state= , uid= , group= , shell= , mode= etc...
+
+ 
+ Example : ansible databases -m copy -a "src=/source/path dest=/destination/path" -i inventory  
+
+Ad-Hoc Commands :
+
+* ansible webserver -m copy -a "src=/source/path/ dest=/destination/path/" -i inventory --> To copy the files from src to dest on webserver systems/servers .
+
+* ansible webserver -m yum -a "name=service-name state=present" -i inventory --> To install httpd or any other services on webserver systems/servers .
+
+* ansible webserver -m yum -a "name=service-name state=absent" -i inventory --> To delete or remove httpd or any other services on all systems/servers .
+
+* ansible all -m file -a "path=/file/path/dirname or filename state=directory or touch" -i inventory --> To create a directory or file on all systems/servers .
+
+* ansible all -m file -a "path=/file/path/dirname or filename state=absent" -i inventory --> To remove a directory or file from all systems/servers .
+
+* ansible all -m file -a "path=/file/path/filename mode=777" -i inventory  --> To set/change permission to a file on all systems/servers .
+
+* ansible all -m file -a "path=/path/to/dir mode=0755 state=directory" -i inventory --> To set/change permission of a directory on all systems/servers .
+
+* ansible all -m file -a "path=/path/to-file/filename owner=username group=groupname" -i inventory --> To change ownership of a file on all systems/servers .
+
+* ansible all -m file -a "path=/path/to/dirname owner=username group=groupname state=directory" -i inventory --> To change ownership of a directory on all systems/servers .
+
+* ansible all -m user -a "name=username uid=uidnum group=groupname" -i inventory --> To create a user with specified uid and group on all systems/servers .
+
+* ansible all -m user -a "name=username state=absent" -i inventory --> To delete the user from all the system/servers .
+
+* ansible all -m service -a "name=service-name state=started" -i inventory --> To start httpd or any other service of all systems/servers .
+
+* ansible all -m service -a "name=service-name enabled=yes" -i inventory --> To enable httpd or any other services on all systems/servers . 
+
+* ansible all -m service -a "name=service-name state=stopped" -i inventory --> To stop httpd or any other services on all systems/servers .
+
+* ansible all -m service -a "name=service-name enabled=no" -i inventory --> To disable httpd or any other services on all systems/seervices .
+
+* ansible database -m yum -a "name=mysql-server state=present" -i inventory --> To install MySQL servers on database systems/servers .
+
+* ansible database -m service -a "name=mysqld.service state=stsrted" -i inventory --> To start MySQL services on database systems/servers .
+
+* ansible database -m command -a "systemctl daemon-reload" --> To reload the systemd daemon after removing the unit file from the database systems/servers .
+
+* ansible all -m command -a "shutdown -h now" --> To poweroff all systems/servers .
+
+* ansible webservers -m command -a "systemctl poweroff" --> To poweroff webservers or specific group of systems/servers .
+
+* ansible -i inventory all -b -a "/sbin/poweroff" --> To poweroff all the systems/servers only if the file exists . 
+
+
+

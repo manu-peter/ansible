@@ -1,0 +1,28 @@
+---
+
+- name: Enabling httpd in Firewall-D
+  hosts: webservers
+  become: yes
+  tasks:
+
+    - name: Enable httpd in firewall-d
+      firewalld:
+        service: http
+        state: enabled
+      tags:
+        - enabled
+    - name: Disable httpd in firewall-d
+      firewalld:
+        service: http
+        state: disabled
+      tags:
+        - disabled
+
+
+
+
+
+          # ansible-playbook playbook.yml --tags "enabled" --> This command will only run tasks with the "enabled" tag .
+          
+          # ansible-playbook playbook.yml --skip-tags "disabled" --> This command will skip tasks with the "disabled" tag .
+

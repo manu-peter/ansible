@@ -1,0 +1,16 @@
+---
+
+- name: Create user
+  hosts: all
+  become: all
+  tasks:
+
+    - name: Useradd
+      user:
+        name: give a username
+        password: "{{ 'yourpassword' | password_hash('sha512') }}"
+        update_password: always                                                 # update_password: always: Updates the password on every run, regardless of whether the user already exists or not.
+                                                                                #update_password: on_create: Updates the password only when creating the user, leaving existing users' passwords unchanged.
+                                                                                #update_password: never: Does not update the password, useful when you want to ensure the password remains unchanged if the user already exists
+
+

@@ -1,0 +1,37 @@
+---                                      
+                                                                   # Installing MariaDB (MySQL) using ansible
+- name: Database server setup
+  hosts: IP/Web server name
+  become: yes
+  tasks:
+
+    - name: Installing mariadb-server
+      ansible.builtin.yum:
+        name: mariadb105-server
+        state: present
+
+    - name: Install Python-MySQL
+      pip:
+        name: PyMySQL
+        executbale: pip3
+
+    - name: Start service
+      ansible.builtin.service:
+        name: mariadb
+        state: started
+        enabled: yes
+
+    - name: Create a new database with name accounts
+      mysql-db:
+        name: acounts
+        state: present
+        login_unix_socket: /var/lib/mysql/mysql.sock
+
+    - name: Create a database user with name " Travis "
+      mysql_user:
+        name: Travis
+        password: ' travis123 '
+        priv: '*.*:ALL'            #Priv = Privilage
+        login_unix_socket: /var/lib/mysql/mysql.sock
+
+

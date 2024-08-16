@@ -1,0 +1,27 @@
+--- 
+                                                                          # Installing & config ntp (Chrony) service using handlers .
+- name: Testing Installation with handlers
+  hosts: webservers
+  become: yes
+  tasks:
+
+    - name: Install chrony
+      yum: 
+        name: chrony
+        state: present
+      notify:                                                             #  Tasks that might trigger a handler use the notify directive. If a task triggers a handler, 
+        - enable chrony                                                   #   the handler will run at the end of the playbook, after all tasks have been executed.
+        - restart chrony
+        - remove chrony
+    - name: Enable chrony
+      service: 
+        name: chronyd
+        enabled: yes
+    - name: restart chrony
+      service:
+        name: chronyd
+        state: restarted
+    - name: remove chrony
+      yum:
+        name: chrony
+        state: absent                                                      # Handlers are defined in the handlers section of a playbook or role. They contain tasks that should run when notified.      

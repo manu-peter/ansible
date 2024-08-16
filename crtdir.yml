@@ -1,0 +1,13 @@
+---
+
+- name: Create dir
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: dir
+      file:
+        path: /home/Dev-Ops Learning/dirname  #Absolute Path
+        state: directory         #To remove the directory just type state: absent instead of state: directory 
+
+

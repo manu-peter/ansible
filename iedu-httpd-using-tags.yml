@@ -1,0 +1,39 @@
+---
+                                                      # Playbook to install , enable , disable , uninstall httpd using tags
+- name: Install httpd              
+  hosts: webservers
+  become: yes
+  tasks:
+
+    - name: Installing httpd
+      yum:
+        name: httpd
+        state: present
+      tags:                                            # Tags are used to run only the specifc tasks from the playbook
+        - install                                      # This is useful for running or skipping entire sections of a playbook.
+    - name: enabling httpd
+      service:
+        name: httpd
+        state: started
+        enabled: yes
+      tags:
+        - enabled
+    - name: Disabling httpd
+      service:
+        name: httpd
+        state: stopped
+        enabled: no
+      tags: 
+        - disabled
+    - name: Removing httpd
+      yum: 
+        name: httpd
+        state: absent
+      tags:  
+        - remove
+
+
+
+            # ansible-playbook playbook.yml --tags "enabled" --> This command will only run tasks with the "install" tag .
+
+            # ansible-playbook playbook.yml --skip-tags "disabled" --> This command will skip tasks with the "remove" tag .

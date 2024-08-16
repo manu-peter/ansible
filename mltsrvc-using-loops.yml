@@ -1,0 +1,16 @@
+---
+                                                         # Playbook to install multiple services in a single task using loop .
+---
+- name: Install multiple packages
+  hosts: all
+  become: yes
+  tasks:
+    - name: Install packages
+      package:
+        name: "{{ item }}"
+        state: present
+      loop:
+        - httpd
+        - vim
+        - git
+

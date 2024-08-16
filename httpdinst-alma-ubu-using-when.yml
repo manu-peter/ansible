@@ -1,0 +1,33 @@
+---
+
+- name: Install httpd on all clients
+  hosts: all
+  become: yes
+  tasks:
+
+    - name: Install httpd
+      yum:
+        name: httpd
+        state: present
+      when: ansible_facts['distribution'] == 'AlmaLinux'            # This is a conditional statement. The task will only run if the distribution of the system (as gathered by Ansible facts) is AlmaLinux. 
+    - name: Starting services                                       # If the system is running AlmaLinux, the httpd package will be installed; otherwise, this task will be skipped.
+      services:
+        name: httpd
+        enabled: yes
+      when: ansible_facts['distribution'] == 'AlmaLinux'            # This is a conditional statement that ensures this task only runs if the distribution of the system is AlmaLinux.
+    - name: Install apache2                                         # If the system is running Ubuntu, the httpd service will be started and enabled; otherwise, the task will be skipped.
+      apt:
+        name: apache2
+        state: present
+      when: ansible_facts['distribution'] == 'Ubuntu'                # This is a conditional statement. The task will only run if the distribution of the system (as gathered by Ansible facts) is Ubuntu.
+    - name: Starting services                                        # If the system is running Ubuntu, the apache2 package will be installed; otherwise, this task will be skipped.
+      services:
+        name: apache2
+        state: started
+        enabled: yes
+      when: ansible_facts['distribution'] == 'Ubuntu'                # This is a conditional statement that ensures this task only runs if the distribution of the system is ubuntu. 
+                                                                     # If the system is running Ubuntu, the apache2 service will be started and enabled; otherwise, the task will be skipped.
+
+ 
+
+
